@@ -9,6 +9,12 @@ Some time in 2012 or 2013, my then-roommate went to Blizzcon. I was just learnin
 ![](other/manfred.jpg)
 
 But what if you are not a zerg player, like Manfred?
-This repo has a few ideas on to automate the process of creating knitting colour charts from images. Next steps: A front end?
 ![](other/example.jpg)
 
+We can output a knitting chart for that looks like this:
+
+![](other/output.jpg)
+
+
+
+This repo has a few ideas on to automate the process of creating knitting colour charts from images. Next steps: A front end?
