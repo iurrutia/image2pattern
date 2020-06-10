@@ -3,7 +3,10 @@
 
 import streamlit as st
 import numpy as np
-from process_image import process_image
+from PIL import Image
+import matplotlib.pyplot as plt
+from process_image import process_image, get_table_download_link
+
 
 st.write(""" # image2stitch""")
 st.write(""" Turn an image into a knitting colour chart. """)
@@ -20,7 +23,7 @@ st.sidebar.header("How do I open my csv file?")
 st.sidebar.markdown("Open your csv file in a spreadsheet program, like Microsoft Excel, Google Docs, Numbers, or OpenOffice Calc. When prompted, choose commas as the column delimiter.")
 
 st.sidebar.header("What do the settings mean?")
-st.sidebar.markdown("*Algorithm* allows you to choose which clustering algorithm is used to select the yarn colours. (k-means or agglomerative clustering). *Colour Space* allows you to pick what colour space the clustering algorithm will run on.")
+st.sidebar.markdown("Input the number of colours of yarn you want to use, the number of stitches (wide) for your colour chart, and the colour space. *Colour Space* allows you to pick what colour space the clustering algorithm will run on.")
 
 st.sidebar.header("Can I see your code?")
 st.sidebar.markdown("Sure! Check it out the code and the backstory of this project here: "'[github repo](https://github.com/iurrutia/image2pattern)')
@@ -41,11 +44,6 @@ if img_buffer is None:
 else:
     img = np.array(Image.open(img_buffer))
     
-
-    # Apply
-    # -----------------------------------
-    #display, chart = process_image(img, c_space)
-    
     
 # 2. USER SELECTS THE NUMBER OF YARN COLOURS
 # -----------------------------------
@@ -53,11 +51,9 @@ st.write(""" ## 2. Select your settings """)
 
 x = st.slider("Select a number of yarn colours", value = 5, max_value = 15)
 
-st.write("You selected", x, "yarn colours.")
+stitches = st.slider("Select the number of stitches (across)", value = 30, max_value = 250)
 
 c_space = st.radio("Colour Space", options = ["RGB","HSV"], index = 0)
-
-algo = st.radio("Algorithm", options = ["k-means","Agg"], index = 0)
 
 
 # 3. USER CLICKS 'PROCESS'
@@ -68,13 +64,22 @@ if st.button('Process image'):
     
     if img_buffer is None:
         st.write("You have not uploaded a valid image above.")
-
     else:
         with st.spinner("Patternifying..."):
             # pass args to processing function:
-            output_chart, display = process_image(img, x, c_space, algo)
+            # output is the image, pattern is the pattern for the colour chart
+            output, pattern = process_image(img, x, stitches, c_space)
             st.balloons()
             
             
-    np.savetxt("pattern.csv", output_chart, fmt='%i', delimiter=",") 
-    f'<a href="data:file/csv;base64,{b64}" download="pattern.csv">Download csv file</a>'
+            # Display image preview to user
+            st.write(""" #### Image Preview:""")
+            fig, ax = plt.subplots()
+            im = ax.imshow(output)
+            plt.axis('off')
+            st.pyplot()
+            
+            # Download csv to user
+            st.markdown(get_table_download_link(pattern), unsafe_allow_html=True)
+            # st.write(""" #### Pattern preview:""")
+            # st.write(pattern)
