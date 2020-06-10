@@ -1,0 +1,4 @@
+Live:
+- Connect to VM(SSH)
+- (1) tmux a (to reattach) or (2) tmux new (to create new one if crashes)
+ - streamlit run front_end.py --server.port 8080 --server.enableCORS false
