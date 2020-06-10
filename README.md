@@ -1,7 +1,7 @@
 # README 
 
 ### image2stitch
-A mini-project to make images into knitting pattern colour charts.
+A mini-project to make images into knitting pattern colour charts using k-means.
 
 ![](other/demo_vid2.gif)
 
