@@ -18,4 +18,8 @@ We can output a knitting chart for that looks like this:
 
 ![](other/output.jpg)
 
+## How?
+
+Knit stitches are wider than they are taller (1.25 wide = 1 tall). Images are resized to the correct ratio, then pixelated. The colour space is reduced by performing k-means clustering on the rgb or hsv colourspace for the image. The user is shown a preview of the image with the reduced colourset, and given the option to download a file (dataframe) with the colour labels k-means (relabelled from zero to n, the number of colours.)
+
 
