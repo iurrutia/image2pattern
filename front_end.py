@@ -10,7 +10,8 @@ from process_image import process_image, get_table_download_link
 
 st.write(""" # image2stitch""")
 st.write(""" Turn an image into a knitting colour chart. """)
-st.write(""" To start again, press 'r' or refresh this page. """)
+st.write(""" This web app is hosted on a free server, so it may crash if your image is very large, or if you process many images very quickly.""")
+st.write(""" To reboot, press 'r' or refresh this page. """)
 
 
 # SIDEBAR
